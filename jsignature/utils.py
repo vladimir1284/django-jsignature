@@ -7,7 +7,8 @@ from itertools import chain
 from PIL import Image, ImageDraw, ImageOps
 
 AA = 5  # super sampling gor antialiasing
-
+LINE_WIDTH = 1
+COLOR = "#000F55"
 
 def draw_signature(data, as_file=False):
     """ Draw signature based on lines stored in json_string.
@@ -35,11 +36,14 @@ def draw_signature(data, as_file=False):
     # Draw image
     im = Image.new("RGBA", (width * AA, height * AA))
     draw = ImageDraw.Draw(im)
+    # Decor Line
+    draw.line([(0, 0.85*height* AA), (width* AA, 0.85*height* AA)], fill="#000000", width=LINE_WIDTH * AA)
+    # Draw handwriting
     for line in drawing:
         len_line = len(line['x'])
         points = [(line['x'][i] * AA, line['y'][i] * AA)
                   for i in range(0, len_line)]
-        draw.line(points, fill="#000", width=2 * AA)
+        draw.line(points, fill=COLOR, width=LINE_WIDTH * AA)
     im = ImageOps.expand(im)
     # Smart crop
     bbox = im.getbbox()

@@ -46,7 +46,7 @@ def draw_signature(data, as_file=False):
     if bbox:
         im.crop(bbox)
 
-    im.thumbnail((width, height), Image.ANTIALIAS)
+    im.thumbnail((width, height), Image.Resampling.LANCZOS)
 
     if as_file:
         ret = im._dump(format='PNG')
